@@ -37,6 +37,8 @@ DEFAULT_MODELS = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "g
 BAD, STATE = set(), {"model": None, "error": ""}
 
 # ---------- 1. SAFETY LAYER ----------
+# CRISIS: Stores high-risk phrases and keywords indicating immediate self-harm or severe mental health emergencies.
+# When matched, the app bypasses standard responses to trigger urgent crisis intervention resources.
 CRISIS = [r"kill myself", r"suicid", r"end my life", r"want to die", r"wanna die", r"don'?t want to (live|be here|exist)",
           r"better off dead", r"end it all", r"hurt myself", r"self[- ]?harm", r"cut myself", r"no reason to live",
           r"can'?t go on", r"take my own life", r"not worth living"]
@@ -52,10 +54,13 @@ CRISIS_REPLY = ("I'm really concerned about what you just shared, and I'm glad y
                 "local emergency number now.")
 
 def is_crisis(text):
+    """Normalize apostrophes and check if input matches any crisis regex pattern."""
     t = text.lower().replace("\u2019", "'")
     return any(re.search(p, t) for p in CRISIS)
 
 # ---------- 2. EMOTION + INTENT DETECTION (lexicon NLP; Gemini also classifies when enabled) ----------
+# LEX: Stores an emotional lexicon of words and phrases associated with everyday stress, anxiety, or low mood.
+# Used to classify user sentiment and provide supportive, empathetic responses for non-crisis distress.
 LEX = {
     "joy": ["happy", "glad", "great", "excited", "proud", "grateful", "good", "wonderful", "amazing", "relieved", "cheerful", "love", "awesome", "fun", "better"],
     "sadness": ["sad", "depress", "cry", "hopeless", "empty", "down", "miserable", "grief", "heartbroken", "worthless", "unhappy", "low", "numb", "hurt"],
@@ -64,10 +69,13 @@ LEX = {
     "stress": ["stress", "overwhelm", "pressure", "exam", "deadline", "burn", "exhaust", "too much", "assignment", "workload", "can't cope", "tired", "struggl"],
     "loneliness": ["lonely", "alone", "isolated", "no friends", "left out", "ignored", "nobody", "homesick", "miss home"],
 }
+# MOOD: Baseline weighting scores used to rank detected emotional states.
+# NEG_POS: Regex pattern to detect negated positive phrases (e.g., "not happy", "no longer fine").
 MOOD = {"joy": 5, "neutral": 3, "stress": 2.5, "anxiety": 2.5, "anger": 2, "sadness": 1.5, "loneliness": 1.5, "crisis": 1}
 NEG_POS = re.compile(r"(not|n't|never|no longer)\s+(\w+\s+)?(happy|good|great|fine|okay|ok|well)")
 
 def detect(text):
+    """Score emotional categories using LEX keywords and handle negated positive words."""
     t = text.lower().replace("\u2019", "'")
     scores = {e: sum(1 for k in kws if re.search(r"\b" + re.escape(k), t)) for e, kws in LEX.items()}
     if NEG_POS.search(t):
