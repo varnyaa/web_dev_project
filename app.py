@@ -37,6 +37,8 @@ DEFAULT_MODELS = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "g
 BAD, STATE = set(), {"model": None, "error": ""}
 
 # ---------- 1. SAFETY LAYER ----------
+# CRISIS: Stores high-risk phrases and keywords indicating immediate self-harm or severe mental health emergencies.
+# When matched, the app bypasses standard responses to trigger urgent crisis intervention resources.
 CRISIS = [r"kill myself", r"suicid", r"end my life", r"want to die", r"wanna die", r"don'?t want to (live|be here|exist)",
           r"better off dead", r"end it all", r"hurt myself", r"self[- ]?harm", r"cut myself", r"no reason to live",
           r"can'?t go on", r"take my own life", r"not worth living"]
@@ -56,6 +58,8 @@ def is_crisis(text):
     return any(re.search(p, t) for p in CRISIS)
 
 # ---------- 2. EMOTION + INTENT DETECTION (lexicon NLP; Gemini also classifies when enabled) ----------
+# LEX: Stores an emotional lexicon of words and phrases associated with everyday stress, anxiety, or low mood.
+# Used to classify user sentiment and provide supportive, empathetic responses for non-crisis distress.
 LEX = {
     "joy": ["happy", "glad", "great", "excited", "proud", "grateful", "good", "wonderful", "amazing", "relieved", "cheerful", "love", "awesome", "fun", "better"],
     "sadness": ["sad", "depress", "cry", "hopeless", "empty", "down", "miserable", "grief", "heartbroken", "worthless", "unhappy", "low", "numb", "hurt"],
