@@ -54,6 +54,7 @@ CRISIS_REPLY = ("I'm really concerned about what you just shared, and I'm glad y
                 "local emergency number now.")
 
 def is_crisis(text):
+    """Normalize apostrophes and check if input matches any crisis regex pattern."""
     t = text.lower().replace("\u2019", "'")
     return any(re.search(p, t) for p in CRISIS)
 
@@ -72,6 +73,7 @@ MOOD = {"joy": 5, "neutral": 3, "stress": 2.5, "anxiety": 2.5, "anger": 2, "sadn
 NEG_POS = re.compile(r"(not|n't|never|no longer)\s+(\w+\s+)?(happy|good|great|fine|okay|ok|well)")
 
 def detect(text):
+    """Score emotional categories using LEX keywords and handle negated positive words."""
     t = text.lower().replace("\u2019", "'")
     scores = {e: sum(1 for k in kws if re.search(r"\b" + re.escape(k), t)) for e, kws in LEX.items()}
     if NEG_POS.search(t):
