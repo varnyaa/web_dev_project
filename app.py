@@ -69,6 +69,8 @@ LEX = {
     "stress": ["stress", "overwhelm", "pressure", "exam", "deadline", "burn", "exhaust", "too much", "assignment", "workload", "can't cope", "tired", "struggl"],
     "loneliness": ["lonely", "alone", "isolated", "no friends", "left out", "ignored", "nobody", "homesick", "miss home"],
 }
+# MOOD: Baseline weighting scores used to rank detected emotional states.
+# NEG_POS: Regex pattern to detect negated positive phrases (e.g., "not happy", "no longer fine").
 MOOD = {"joy": 5, "neutral": 3, "stress": 2.5, "anxiety": 2.5, "anger": 2, "sadness": 1.5, "loneliness": 1.5, "crisis": 1}
 NEG_POS = re.compile(r"(not|n't|never|no longer)\s+(\w+\s+)?(happy|good|great|fine|okay|ok|well)")
 
