@@ -8,6 +8,8 @@
 5. Run `python app.py` (on Mac/Linux use `python3 app.py`).
 6. Open http://localhost:8000 - the header badge should say "Gemini AI".
 
+7. ALERT: You need to generate your own Google Cloud Platform API key 
+
 No key? It still works with the built-in CBT dialogue (badge: Offline mode).
 Stop the server with Ctrl+C. Change port: `PORT=9000 python app.py`.
 
