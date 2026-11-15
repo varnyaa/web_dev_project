@@ -1,0 +1,23 @@
+MINDEASE – AI MENTAL WELLNESS COMPANION
+One-page concept note | Python backend | HTML/CSS/JS frontend | Free Gemini API
+
+1. PURPOSE
+Students and young adults often face stress, anxiety, loneliness and low mood, but stigma, cost and limited counsellors keep many from seeking help. MindEase is a private, free, 24/7 first-line companion that listens, helps people name and reframe their feelings, and suggests simple coping exercises. It supports wellbeing; it is NOT a therapist or an emergency service.
+
+2. HOW THE APPLICATION WORKS (PIPELINE)
+1. User input – the person types how they feel in the chat.
+2. Safety check – a crisis-phrase scan runs first. If triggered, the AI is bypassed and helplines are shown instantly.
+3. Emotion detection – emotion (joy, sadness, anger, anxiety, stress, loneliness, neutral) and intent (venting or seeking advice) are identified using a keyword lexicon with negation handling, plus Gemini's own classification.
+4. Response – Gemini writes a short, empathetic reply using the conversation history. If there is no key or Gemini is busy, a built-in CBT dialogue engine answers instead, so the bot never goes silent.
+5. Coping tool and mood log – a matching exercise appears in the side card and the mood score (1–5) is saved to the mood chart.
+6. Feedback loop – thumbs-up/thumbs-down ratings are stored, and built-in replies with more thumbs-up are chosen more often.
+
+3. PRE-BUILT PROMPTS AND KNOWLEDGE FOR COMMON ISSUES
+Two layers keep the bot on topic. A master system prompt limits Gemini to emotional wellbeing, tells it to validate the feeling, use one CBT or mindfulness technique, ask one gentle question, write 2–5 plain sentences, never diagnose or advise medication, and politely redirect off-topic questions. Underneath sits a built-in library of pre-written replies, a 5-step CBT ladder (find the thought, test the evidence, reframe, plan a small action, reflect) and greeting handling that moves the chat forward rather than stalling at "hi".
+
+Common issue -> Technique built in -> Coping tool shown
+- Stress, exam pressure -> Prioritise, take a 10-minute step -> 4-7-8 Breathing
+- Anxiety, overthinking -> Worst / best / realistic case -> 5-4-3-2-1 Grounding
+- Low mood, sadness -> Thought check, behavioural activation -> Tiny Joy Activation
+- Anger, frustration -> Pause; control vs. cannot control -> Box Breathing
+- Loneliness -> Test "nobody cares", small reach-out
